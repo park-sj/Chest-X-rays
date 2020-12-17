@@ -12,30 +12,27 @@ csv_file = "./stage_2_train_labels.csv"
 def split_folder_by_target():
     labels = pd.read_csv(csv_file)
 
-    print(labels)
-    exit()
-
     normal = 0
     abnormal = 0
 
     if not os.path.exists('./split_folder_by_target'):
         os.makedirs('./split_folder_by_target')
     else:
-        if not os.path.exists('./split_folder_by_target/normal'):
-            os.makedirs('./split_folder_by_target/normal')
-        if not os.path.exists('./split_folder_by_target/abnormal'):
-            os.makedirs('./split_folder_by_target/abnormal')
+        if not os.path.exists('./split_folder_by_target/NORMAL'):
+            os.makedirs('./split_folder_by_target/NORMAL')
+        if not os.path.exists('./split_folder_by_target/PNEUMONIA'):
+            os.makedirs('./split_folder_by_target/PNEUMONIA')
 
     for idx_root in enumerate(os.listdir(root_dir)):
         if(labels.iloc[idx_root[0], 5]):
-            copyfile(os.path.join(root_dir, idx_root[1]), os.path.join(target_dir, 'normal', idx_root[1]))
-            normal += 1
-        else:
-            copyfile(os.path.join(root_dir, idx_root[1]), os.path.join(target_dir, 'abnormal', idx_root[1]))
+            copyfile(os.path.join(root_dir, idx_root[1]), os.path.join(target_dir, 'PNEUMONIA', idx_root[1]))
             abnormal += 1
+        else:
+            copyfile(os.path.join(root_dir, idx_root[1]), os.path.join(target_dir, 'NORMAL', idx_root[1]))
+            normal += 1
 
-    print("abnormal: ", abnormal)
-    print("normal: ", normal)
+    print("PNEUMONIA: ", abnormal)
+    print("NORMAL: ", normal)
 
 def run():
     split_folder_by_target()
